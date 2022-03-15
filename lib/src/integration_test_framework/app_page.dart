@@ -1,3 +1,4 @@
+import 'package:axl_mobile_test/src/utils/visibility.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -90,15 +91,10 @@ abstract class AppPage<S> {
   /// We will continue to pump until we timeout
   Future<void> awaitVisible(
       [Duration maxDuration = const Duration(seconds: 5)]) async {
-    final startCheckTime = DateTime.now();
-    while (DateTime.now().difference(startCheckTime) < maxDuration) {
-      await tester.pumpAndSettle();
-      if (await screenIsShowing()) {
-        // it's visible, return early
-        return;
-      }
+    final isVisible = await awaitElementVisible(tester, () => screenIsShowing());
+    if (!isVisible) {
+      throw 'Element Not Visible after ${maxDuration.inSeconds} seconds';
     }
-    throw 'Screen Not Visible after 5 seconds';
   }
 
   Future<void> performOnPage(Future<void> Function() action,
