@@ -21,6 +21,6 @@ dev_dependencies:
     hosted:
       name: axlehire_lints
       url: http://nexus.axlehire.com:7777
-    version: ^0.0.4
+    version: ^1.0.0
 
 flutter:
